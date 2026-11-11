@@ -68,12 +68,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.background,
-        paddingHorizontal: 10,
-        marginTop: 20
     },
     error: {
-        color: colors.error,
+        color: 'red',
         fontWeight: 'bold',
     }
 })

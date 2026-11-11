@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
 
 function Login(props) {
     const [email, setEmail] = useState("");
@@ -54,12 +56,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.background,
-        paddingHorizontal: 10,
-        marginTop: 20
     },
     error: {
-        color: colors.error,
+        color: 'red',
         fontWeight: 'bold',
     }
 })

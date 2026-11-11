@@ -1,8 +1,14 @@
-//ACA VA LA TAB.NAVIGATOR
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const Tab = createBottomTabNavigator();
 
 function MenuNav() {
     return(
-        <Text>ACA VA LA TAB.NAVIGATOR</Text>
+        <Tab.Navigator>
+            
+        </Tab.Navigator>
+
     )
 }
 
