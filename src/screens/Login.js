@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
+import { auth } from '../firebase/config';
 
 function Login(props) {
     const [email, setEmail] = useState("");
@@ -10,27 +11,22 @@ function Login(props) {
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
                 setLoginError("");
-                props.navigation.navigate('MenuNav');
             })
             .catch(() => {
                 setLoginError('Credenciales incorrectas');
             });  
     }
-    useEffect(() => auth.onAuthStateChanged( (user) => {
-        if (user) {
-            props.navigation.navigate('MenuNav');
-        }
-    }),[])
 
     return (
         <View style={styles.container}>
             <Text>Email</Text>
             <TextInput
                 keyboardType="email-address"
+                autoCapitalize="none"
                 placeholder="email"
                 onChangeText={text => setEmail(text)}
                 value={email} />
-            <Text>Email</Text>
+            <Text>Contraseña</Text>
             <TextInput 
                 keyboardType="default"
                 placeholder="password"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
+import { auth, db } from '../firebase/config';
 
 
 function Register(props) {
@@ -12,27 +13,27 @@ function Register(props) {
 
     function onSubmit() {
         auth.createUserWithEmailAndPassword(email, password)
-            .then(() => {
+            .then((response) => {
                 return db.collection('users').add({
-                    email: auth.currentUser.email,
+                    email: response.user.email,
                     userName: username,
                     createdAt: Date.now()
                 });
             })
             .then(() => {
                 setRegisterError("");
-                props.navigation.navigate('Login');
             })
             .catch(() => {
                 setRegisterError('Fallo el registro');
             });  
-    } // falta firebase
+    }
 
     return (
         <View style={styles.container}>
             <Text>Email</Text>
             <TextInput
                 keyboardType="email-address"
+                autoCapitalize="none"
                 placeholder="email"
                 onChangeText={text => setEmail(text)}
                 value={email} />
