@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
 import { auth, db } from '../firebase/config';
 
-
 function Register(props) {
 
     const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ function Register(props) {
             })
             .catch(() => {
                 setRegisterError('Fallo el registro');
-            });  
+            });
     }
 
     return (
@@ -42,9 +41,9 @@ function Register(props) {
                 keyboardType="default"
                 placeholder="usuario"
                 onChangeText={text => setUsername(text)}
-                value={username} />           
+                value={username} />
             <Text>Constraseña</Text>
-            <TextInput 
+            <TextInput
                 keyboardType="default"
                 placeholder="password"
                 secureTextEntry={true}
@@ -53,13 +52,13 @@ function Register(props) {
 
             {registerError ? <Text style={styles.error}>{registerError}</Text> : null}
 
-            <Pressable  onPress={() => onSubmit()}>
+            <Pressable onPress={() => onSubmit()}>
                 <Text >Registrate</Text>
             </Pressable>
 
             <Pressable onPress={() => props.navigation.navigate('Login')}>
                 <Text >Ya tengo cuenta</Text>
-            </Pressable>  
+            </Pressable>
         </View>
     )
 }

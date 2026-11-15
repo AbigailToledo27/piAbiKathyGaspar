@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeMenu from './HomeMenu';
 import Profile from '../screens/Profile';
+import NewPost from '../screens/NewPost';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,6 +11,7 @@ function MenuNav() {
     return(
         <Tab.Navigator id="MainTabs">
             <Tab.Screen name="Inicio" component={HomeMenu} options={{ headerShown: false }} />
+            <Tab.Screen name="Nuevo Post" component={NewPost} />
             <Tab.Screen name="Perfil" component={Profile} />
         </Tab.Navigator>
 

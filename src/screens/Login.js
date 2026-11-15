@@ -14,7 +14,7 @@ function Login(props) {
             })
             .catch(() => {
                 setLoginError('Credenciales incorrectas');
-            });  
+            });
     }
 
     return (
@@ -27,23 +27,22 @@ function Login(props) {
                 onChangeText={text => setEmail(text)}
                 value={email} />
             <Text>Contraseña</Text>
-            <TextInput 
+            <TextInput
                 keyboardType="default"
                 placeholder="password"
                 secureTextEntry={true}
-                onChangeText={ text => setPassword(text) }
-                value={password} />     
+                onChangeText={text => setPassword(text)}
+                value={password} />
 
             {loginError ? <Text style={styles.error}>{loginError}</Text> : null}
 
-            <Pressable  onPress={() => onSubmit()}>
+            <Pressable onPress={() => onSubmit()}>
                 <Text >Login</Text>
             </Pressable>
 
             <Pressable onPress={() => props.navigation.navigate('Register')}>
                 <Text >Ir al registro</Text>
             </Pressable>
-  
         </View>
     )
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, TextInput, Pressable, FlatList, StyleSheet } from 'react-native';
 import { auth, db } from '../firebase/config';
 
-export default function Comments(props) {
+function Comments(props) {
   const postId = props.route.params.postId;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -94,3 +94,5 @@ const styles = StyleSheet.create({
   buttonText: { color: '#fff' },
   error: { color: '#b91c1c', marginBottom: 8 },
 });
+
+export default Comments;

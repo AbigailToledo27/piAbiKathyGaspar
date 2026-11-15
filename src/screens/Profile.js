@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../firebase/config';
 
-export default function Profile() {
+function Profile() {
   const [error, setError] = useState('');
 
   function logout() {
@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
   buttonText: { color: '#fff', textAlign: 'center' },
   error: { color: '#b91c1c', marginTop: 12 },
 });
+
+export default Profile;

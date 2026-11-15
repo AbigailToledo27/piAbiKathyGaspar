@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { db } from '../firebase/config';
 import Post from '../components/Post';
 
-export default function Home(props) {
+function Home(props) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,3 +48,5 @@ const styles = StyleSheet.create({
   },
   error: { color: '#b91c1c', marginBottom: 12 },
 });
+
+export default Home;
