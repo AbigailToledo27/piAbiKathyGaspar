@@ -1,15 +1,3 @@
-/*
-La home del sitio deberá mostrar un listado de posteos ordenados descendentes según su fecha de creación,
-es decir, primero los más nuevos.
-En cada posteo se mostrará:
-El nombre de usuario que lo creó o email.
-Descripción del posteo
-Cantidad total de likes recibidos y la posibilidad de dar like o deslikear.
-Botón de comentar que al hacer click
-redireccione a una pantalla donde el usuario pueda agregar comentarios al posteo.
-La pantalla será accesible únicamente si el usuario está logueado.
-*/
-
 import { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { db } from '../firebase/config';

@@ -36,8 +36,8 @@ export default function Post(props) {
       <Text style={styles.description}>{props.post.data.description}</Text>
       <Text>{likes.length} likes</Text>
       <View style={styles.actions}>
-        <Pressable style={styles.button} onPress={toggleLike} disabled={updating || !user}>
-          <Text style={styles.buttonText}>{liked ? 'Quitar like' : 'Dar like'}</Text>
+        <Pressable style={liked ? styles.likedButton : styles.button} onPress={toggleLike} disabled={updating || !user}>
+          <Text style={styles.buttonText}>Me gusta</Text>
         </Pressable>
         <Pressable
           style={styles.button}
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   description: { fontSize: 16, marginBottom: 12 },
   actions: { flexDirection: 'row', marginTop: 12 },
   button: { backgroundColor: '#2446a6', padding: 12, borderRadius: 6, marginRight: 12 },
+  likedButton: { backgroundColor: '#172554', padding: 12, borderRadius: 6, marginRight: 12 },
   buttonText: { color: '#fff' },
   error: { color: '#b91c1c', marginTop: 8 },
 });
