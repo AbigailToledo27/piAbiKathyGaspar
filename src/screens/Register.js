@@ -20,9 +20,12 @@ function Register(props) {
                 });
             })
             .then(() => {
+                return auth.signOut();
+            })
+            .then(() => {
                 setRegisterError("");
             })
-            .catch(() => {
+            .catch(() => { //ver como hacerlo
                 setRegisterError('Fallo el registro');
             });
     }
