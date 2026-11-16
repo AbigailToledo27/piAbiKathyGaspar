@@ -33,7 +33,7 @@ function Comments(props) {
 
   function addComment() {
     if (!auth.currentUser || sending) return;
-    if (!comment.trim()) {
+    if (comment === "") {
       setSubmitError('Escribí un comentario.');
       return;
     }
@@ -43,7 +43,7 @@ function Comments(props) {
     db.collection('comments').add({
       postId: postId,
       owner: auth.currentUser.email,
-      description: comment.trim(),
+      description: comment,
       createdAt: Date.now(),
     })
       .then(() => {
