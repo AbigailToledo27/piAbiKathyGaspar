@@ -18,17 +18,21 @@ function Login(props) {
             .then(() => {
                 setLoginError("");
             })
-            .catch(() => {
-                console.log(error);
-                setLoginError(error.message);
-
-
-                if (error.message.includes('email address')) {
-                    setLoginError('Email mal formateado');
-                } else if (error.message.includes('password')) {
-                    setLoginError('Contraseña incorrecta');
-                } else if (error.message.includes('no user record')) {
+            .catch((error) => {
+                if (error.code === 'auth/invalid-email') {
+                    setLoginError('El email no es válido');
+                } else if (error.code === 'auth/user-not-found') {
                     setLoginError('No existe una cuenta con ese email');
+                } else if (error.code === 'auth/wrong-password') {
+                    setLoginError('Contraseña incorrecta');
+                } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
+                    setLoginError('Email o contraseña incorrectos');
+                } else if (error.code === 'auth/user-disabled') {
+                    setLoginError('Esta cuenta está deshabilitada');
+                } else if (error.code === 'auth/too-many-requests') {
+                    setLoginError('Demasiados intentos. Probá más tarde');
+                } else {
+                    setLoginError('No se pudo iniciar sesión. Intentá de nuevo');
                 }
             });
     }
