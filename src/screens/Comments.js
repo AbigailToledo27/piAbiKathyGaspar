@@ -79,7 +79,7 @@ function Comments(props) {
       <TextInput
         style={styles.input}
         placeholder="Escribí un comentario"
-        multiline
+        multiline={true}
         value={comment}
         onChangeText={setComment}
         editable={!sending}

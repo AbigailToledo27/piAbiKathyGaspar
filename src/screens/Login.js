@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
 import { auth } from '../firebase/config';
 
@@ -6,6 +6,19 @@ function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+    const navigation = props.navigation;
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'MenuNav' }],
+                });
+            }
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     function onSubmit() {
         if (!email) {

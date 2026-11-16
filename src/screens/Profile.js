@@ -2,13 +2,20 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../firebase/config';
 
-function Profile() {
+function Profile(props) {
   const [error, setError] = useState('');
 
   function logout() {
-    auth.signOut().catch(() => {
-      setError('No se pudo cerrar la sesión. Intentá de nuevo.');
-    });
+    auth.signOut()
+      .then(() => {
+        props.navigation.getParent().reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        });
+      })
+      .catch(() => {
+        setError('No se pudo cerrar la sesión. Intentá de nuevo.');
+      });
   }
 
   return (
