@@ -11,6 +11,13 @@ function Register(props) {
 
 
     function onSubmit() {
+        if (!email) {
+            return setRegisterError('Completa el email');
+        } else if (!username) {
+            return setRegisterError('Completa el username');
+        } else if (!password) {
+            return setRegisterError('Completa la contraseña');
+        }
         auth.createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 return db.collection('users').add({
@@ -25,9 +32,18 @@ function Register(props) {
             .then(() => {
                 setRegisterError("");
             })
-            .catch(() => { //ver como hacerlo
-                setRegisterError('Fallo el registro');
-            });
+    
+            .catch((error) => {
+                console.log(error);
+                setRegisterError(error.message);
+
+                if (error.message.includes('email address')) {
+                    setRegisterError('Email mal formateado');
+                } else if (error.message.includes('6 characters')) {
+                    setRegisterError('La contraseña debe tener al menos 6 caracteres');
+                } 
+});
+           
     }
 
     return (

@@ -8,12 +8,28 @@ function Login(props) {
     const [loginError, setLoginError] = useState("");
 
     function onSubmit() {
+        if (!email) {
+            return setLoginError('Completa el email');
+        } else if (!password) {
+            return setLoginError('Completa la contraseña');
+        }
+
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
                 setLoginError("");
             })
             .catch(() => {
-                setLoginError('Credenciales incorrectas');
+                console.log(error);
+                setLoginError(error.message);
+
+
+                if (error.message.includes('email address')) {
+                    setLoginError('Email mal formateado');
+                } else if (error.message.includes('password')) {
+                    setLoginError('Contraseña incorrecta');
+                } else if (error.message.includes('no user record')) {
+                    setLoginError('No existe una cuenta con ese email');
+                }
             });
     }
 
