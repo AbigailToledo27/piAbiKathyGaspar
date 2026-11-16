@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import firebase from 'firebase';
 import { auth, db } from '../firebase/config';
 
-export default function Post(props) {
+function Post(props) {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState('');
   const likes = props.post.data.likes || [];
@@ -34,14 +34,20 @@ export default function Post(props) {
     <View style={styles.card}>
       <Text style={styles.owner}>{props.post.data.owner}</Text>
       <Text style={styles.description}>{props.post.data.description}</Text>
-      <Text>{likes.length} likes</Text>
+      <Text style={styles.likes}>
+        {likes.length} {likes.length === 1 ? 'like' : 'likes'}
+      </Text>
       <View style={styles.actions}>
         <Pressable style={liked ? styles.likedButton : styles.button} onPress={toggleLike} disabled={updating || !user}>
           <Text style={styles.buttonText}>Me gusta</Text>
         </Pressable>
         <Pressable
           style={styles.button}
-          onPress={() => props.navigation.navigate('Comments', { postId: props.post.id })}
+          onPress={() => props.navigation.navigate('Comments', {
+            postId: props.post.id,
+            owner: props.post.data.owner,
+            description: props.post.data.description,
+          })}
         >
           <Text style={styles.buttonText}>Comentar</Text>
         </Pressable>
@@ -55,9 +61,12 @@ const styles = StyleSheet.create({
   card: { backgroundColor: '#fff', padding: 16, borderRadius: 8, marginBottom: 16 },
   owner: { fontWeight: 'bold', color: '#172554', marginBottom: 8 },
   description: { fontSize: 16, marginBottom: 12 },
+  likes: { fontSize: 13, color: '#64748b' },
   actions: { flexDirection: 'row', marginTop: 12 },
   button: { backgroundColor: '#2446a6', padding: 12, borderRadius: 6, marginRight: 12 },
   likedButton: { backgroundColor: '#172554', padding: 12, borderRadius: 6, marginRight: 12 },
   buttonText: { color: '#fff' },
   error: { color: '#b91c1c', marginTop: 8 },
 });
+
+export default Post;

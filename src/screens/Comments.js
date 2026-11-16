@@ -4,6 +4,8 @@ import { auth, db } from '../firebase/config';
 
 function Comments(props) {
   const postId = props.route.params.postId;
+  const owner = props.route.params.owner;
+  const description = props.route.params.description;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
@@ -55,16 +57,21 @@ function Comments(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}><View style={styles.postCard}>
+      <Text style={styles.postLabel}>PUBLICACIÓN</Text>
+      <Text style={styles.owner}>{owner}</Text>
+      <Text style={styles.description}>{description}</Text>
+    </View>
+    <Text style={styles.title}>Comentarios</Text>
       {loading ? <Text>Cargando comentarios...</Text> : null}
       {loadError ? <Text style={styles.error}>{loadError}</Text> : null}
-      <FlatList
+    <FlatList
         data={comments}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.owner}>{item.data.owner}</Text>
-            <Text>{item.data.description}</Text>
+            <Text style={styles.description}>{item.data.description}</Text>
           </View>
         )}
         ListEmptyComponent={!loading && !loadError ? <Text>Todavía no hay comentarios.</Text> : null}
@@ -87,11 +94,15 @@ function Comments(props) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#eef2ff' },
-  card: { backgroundColor: '#fff', padding: 16, borderRadius: 8, marginBottom: 12 },
-  owner: { fontWeight: 'bold', marginBottom: 6 },
-  input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc', padding: 12, marginVertical: 12, borderRadius: 6 },
-  button: { backgroundColor: '#2446a6', padding: 12, borderRadius: 6, alignItems: 'center' },
-  buttonText: { color: '#fff' },
+  postCard: { backgroundColor: '#fff', padding: 20, borderRadius: 16, borderWidth: 1, borderColor: '#c7d2fe', marginBottom: 20 },
+  postLabel: { fontSize: 12, fontWeight: 'bold', color: '#64748b', marginBottom: 12 },
+  title: { fontSize: 20, fontWeight: 'bold', color: '#172554', marginBottom: 12 },
+  card: { backgroundColor: '#fff', padding: 16, borderRadius: 12, borderWidth: 1, borderColor: '#dbe2f1', marginBottom: 12 },
+  owner: { fontSize: 14, fontWeight: 'bold', color: '#172554', marginBottom: 8 },
+  description: { fontSize: 16, lineHeight: 24, color: '#334155' },
+  input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#cbd5e1', padding: 16, minHeight: 88, fontSize: 16, textAlignVertical: 'top', marginVertical: 12, borderRadius: 12 },
+  button: { backgroundColor: '#2446a6', padding: 14, borderRadius: 10, alignItems: 'center' },
+  buttonText: { color: '#fff', fontWeight: 'bold' },
   error: { color: '#b91c1c', marginBottom: 8 },
 });
 

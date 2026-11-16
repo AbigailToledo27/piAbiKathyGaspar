@@ -30,7 +30,7 @@ function NewPost(props) {
                 props.navigation.navigate('Inicio', { screen: 'Home' });
             })
             .catch((error) => {
-                setError(error.code + ': ' + error.message);
+                setError('No se pudo publicar el posteo. Intentá de nuevo.');
                 setSending(false);
             });
     }
@@ -39,26 +39,28 @@ function NewPost(props) {
         <View style={styles.container}>
             <Text style={styles.title}>Crear un posteo</Text>
             <Text style={styles.subtitle}>Compartí algo con la comunidad.</Text>
-            <Text style={styles.label}>Descripción</Text>
-            <TextInput
-                style={styles.input}
-                keyboardType="default"
-                placeholder="Escribí tu posteo"
-                multiline={true}
-                value={description}
-                onChangeText={text => setDescription(text)}
-                editable={!sending}
-            />
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-            <Pressable
-                style={styles.button}
-                onPress={() => onSubmit()}
-                disabled={sending}
-            >
-                <Text style={styles.buttonText}>
-                    {sending ? 'Publicando...' : 'Publicar posteo'}
-                </Text>
-            </Pressable>
+            <View style={styles.card}>
+                <Text style={styles.label}>Descripción</Text>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="default"
+                    placeholder="Escribí tu posteo"
+                    multiline={true}
+                    value={description}
+                    onChangeText={text => setDescription(text)}
+                    editable={!sending}
+                />
+                {error ? <Text style={styles.error}>{error}</Text> : null}
+                <Pressable
+                    style={styles.button}
+                    onPress={() => onSubmit()}
+                    disabled={sending}
+                >
+                    <Text style={styles.buttonText}>
+                        {sending ? 'Publicando...' : 'Publicar posteo'}
+                    </Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -66,7 +68,7 @@ function NewPost(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 20,
         backgroundColor: '#eef2ff',
     },
     title: {
@@ -80,26 +82,33 @@ const styles = StyleSheet.create({
         color: '#475569',
         marginBottom: 24,
     },
+    card: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#dbe2f1',
+        borderRadius: 16,
+        padding: 20,
+    },
     label: {
         fontWeight: 'bold',
         color: '#172554',
         marginBottom: 8,
     },
     input: {
-        backgroundColor: '#fff',
+        backgroundColor: '#f8faff',
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
+        borderColor: '#cbd5e1',
+        borderRadius: 12,
         padding: 16,
-        minHeight: 160,
+        minHeight: 180,
         fontSize: 16,
         textAlignVertical: 'top',
         marginBottom: 16,
     },
     button: {
         backgroundColor: '#2446a6',
-        padding: 12,
-        borderRadius: 6,
+        padding: 14,
+        borderRadius: 10,
         alignItems: 'center',
     },
     buttonText: {
