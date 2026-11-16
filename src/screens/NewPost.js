@@ -10,7 +10,7 @@ function NewPost(props) {
     function onSubmit() {
         if (!auth.currentUser || sending) return;
 
-        if (!description.trim()) {
+        if (description === "") {
             setError('Escribí un texto para publicar.');
             return;
         }
@@ -20,7 +20,7 @@ function NewPost(props) {
 
         db.collection('posts').add({
             owner: auth.currentUser.email,
-            description: description.trim(),
+            description: description,
             createdAt: Date.now(),
             likes: [],
         })
