@@ -47,43 +47,106 @@ function Login(props) {
 
     return (
         <View style={styles.container}>
-            <Text>Email</Text>
-            <TextInput
-                keyboardType="email-address"
-                autoCapitalize="none"
-                placeholder="email"
-                onChangeText={text => setEmail(text)}
-                value={email} />
-            <Text>Contraseña</Text>
-            <TextInput
-                keyboardType="default"
-                placeholder="password"
-                secureTextEntry={true}
-                onChangeText={text => setPassword(text)}
-                value={password} />
+            <Text style={styles.title}>¡Bienvenido!</Text>
+            <Text style={styles.subtitle}>Iniciá sesión para continuar.</Text>
 
-            {loginError ? <Text style={styles.error}>{loginError}</Text> : null}
+            <View style={styles.card}>
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="email-address"
+                    placeholder="tu@email.com"
+                    onChangeText={text => setEmail(text)}
+                    value={email}
+                />
 
-            <Pressable onPress={() => onSubmit()}>
-                <Text >Login</Text>
-            </Pressable>
+                <Text style={styles.label}>Contraseña</Text>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="default"
+                    placeholder="Contraseña"
+                    secureTextEntry={true}
+                    onChangeText={text => setPassword(text)}
+                    value={password}
+                />
 
-            <Pressable onPress={() => props.navigation.navigate('Register')}>
-                <Text >Ir al registro</Text>
-            </Pressable>
+                {loginError ? <Text style={styles.error}>{loginError}</Text> : null}
+
+                <Pressable style={styles.button} onPress={() => onSubmit()}>
+                    <Text style={styles.buttonText}>Iniciar sesión</Text>
+                </Pressable>
+
+                <Pressable onPress={() => props.navigation.navigate('Register')}>
+                    <Text style={styles.link}>¿No tenés cuenta? Registrate</Text>
+                </Pressable>
+            </View>
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        padding: 20,
+        backgroundColor: '#eef2ff',
+    },
+    title: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: '#172554',
+        marginBottom: 4,
+        textAlign: 'center',
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#475569',
+        marginBottom: 24,
+        textAlign: 'center',
+    },
+    card: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#dbe2f1',
+        borderRadius: 16,
+        padding: 20,
+    },
+    label: {
+        fontWeight: 'bold',
+        color: '#172554',
+        marginBottom: 8,
+    },
+    input: {
+        backgroundColor: '#f8faff',
+        borderWidth: 1,
+        borderColor: '#cbd5e1',
+        borderRadius: 12,
+        padding: 14,
+        fontSize: 16,
+        marginBottom: 16,
+    },
+    button: {
+        backgroundColor: '#2446a6',
+        padding: 14,
+        borderRadius: 10,
         alignItems: 'center',
+        marginTop: 4,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    link: {
+        color: '#2446a6',
+        textAlign: 'center',
+        marginTop: 16,
+        fontWeight: '600',
     },
     error: {
-        color: 'red',
+        color: '#b91c1c',
         fontWeight: 'bold',
-    }
+        marginBottom: 12,
+    },
 })
-
 export default Login;
