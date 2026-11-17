@@ -8,10 +8,7 @@ function Profile(props) {
   function logout() {
     auth.signOut()
       .then(() => {
-        props.navigation.getParent().reset({
-          index: 0,
-          routes: [{ name: 'Login' }],
-        });
+        props.navigation.navigate('Login');
       })
       .catch(() => {
         setError('No se pudo cerrar la sesión. Intentá de nuevo.');

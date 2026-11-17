@@ -11,10 +11,7 @@ function Login(props) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'MenuNav' }],
-                });
+                navigation.navigate('MenuNav');
             }
         });
         return unsubscribe;
@@ -30,6 +27,7 @@ function Login(props) {
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
                 setLoginError("");
+                props.navigation.navigate('MenuNav');
             })
             .catch((error) => {
                 console.log(error);
