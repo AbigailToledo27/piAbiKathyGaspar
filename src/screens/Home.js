@@ -51,9 +51,14 @@ function Home(props) {
             <Text style={styles.title}>Inicio</Text>
           </Pressable>
         </View>
-        <Text style={styles.subtitle}>Pequeñas ideas, buenas conversaciones.</Text>
+        <Text style={styles.subtitle}>Pequeñas ideas, buenas conversaciones. </Text>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
+        {!loading && !error && posts.length === 0 ? (
+          <Text style={styles.message}>
+            Todavía no hay posteos. ¡Empezá la ronda! 
+          </Text>
+        ) : null}
         {loading ? (<View style={styles.loading}>
           <ActivityIndicator size="large" color="#0b6f91" />
         </View>
@@ -63,7 +68,6 @@ function Home(props) {
             data={posts}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Post post={item} navigation={props.navigation} />}
-            ListEmptyComponent={!loading && !error ? <Text style={styles.message}>Todavía no hay posteos. ¡Empezá la ronda!</Text> : null}
           />
         )}
       </View>

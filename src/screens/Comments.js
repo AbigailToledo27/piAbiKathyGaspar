@@ -77,6 +77,21 @@ function Comments(props) {
         <Text style={styles.title}>Comentarios</Text>
         <View style={styles.commentsArea}>
           {loadError ? (<Text style={styles.error}>{loadError}</Text>) : null}
+          {!loading && !loadError && comments.length === 0 ? (
+            <View style={styles.emptyState}>
+              <MaterialCommunityIcons
+                name="comment-outline"
+                size={28}
+                color="#0b6f91"
+              />
+              <Text style={styles.emptyTitle}>
+                Todavía no hay comentarios
+              </Text>
+              <Text style={styles.emptyText}>
+                Podés empezar la conversación.
+              </Text>
+            </View>
+          ) : null}
           {loading ? (
             <View style={styles.loading}>
               <ActivityIndicator size="large" color="#0b6f91" />
@@ -85,21 +100,6 @@ function Comments(props) {
             <FlatList
               style={styles.list}
               data={comments}
-              ListEmptyComponent={!loading && !loadError ? (
-                <View style={styles.emptyState}>
-                  <MaterialCommunityIcons
-                    name="comment-outline"
-                    size={28}
-                    color="#0b6f91"
-                  />
-                  <Text style={styles.emptyTitle}>
-                    Todavía no hay comentarios
-                  </Text>
-                  <Text style={styles.emptyText}>
-                    Podés empezar la conversación.
-                  </Text>
-                </View>
-              ) : null}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <View style={styles.card}>
@@ -134,10 +134,10 @@ function Comments(props) {
             {sending ? (
               <View style={styles.sending}>
                 <ActivityIndicator size="small" color="#fff" />
-                <Text style={styles.sendingText}>Enviando...</Text>
+                <Text style={styles.sendingText}>Enviando... </Text>
               </View>
             ) : (
-              <Text style={styles.buttonText}>Agregar comentario</Text>
+              <Text style={styles.buttonText}>Agregar comentario </Text>
             )}
           </Pressable>
         </View>
@@ -332,3 +332,5 @@ const styles = StyleSheet.create({
 });
 
 export default Comments;
+
+

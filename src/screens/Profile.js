@@ -80,12 +80,17 @@ function Profile(props) {
             </View>
           </View>
           <Pressable style={styles.button} onPress={logout}>
-            <Text style={styles.buttonText}>Cerrar sesión</Text>
+            <Text style={styles.buttonText}>Cerrar sesión </Text>
           </Pressable>
         </View>
 
         <Text style={styles.title}>Mis publicaciones</Text>
         {error ? <Text style={styles.error}>{error}</Text> : null}
+        {!loading && !error && posts.length === 0 ? (
+          <Text style={styles.message}>
+            Todavía no publicaste posteos. 
+          </Text>
+        ) : null}
         {loading ? (<View style={styles.loading}>
           <ActivityIndicator size="large" color="#0b6f91" />
         </View>
@@ -95,9 +100,6 @@ function Profile(props) {
             data={posts}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Post post={item} navigation={props.navigation} />}
-            ListEmptyComponent={!loading && !error ? (
-              <Text style={styles.message}>Todavía no publicaste posteos.</Text>
-            ) : null}
           />
         )}
       </View>
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
   username: { fontSize: 24, fontWeight: 'bold', color: '#174f68', marginBottom: 6 },
   email: { fontSize: 14, lineHeight: 20, color: '#4d6f80' },
   button: {
-    balignSelf: 'flex-start',
+    alignSelf: 'flex-start',
     minHeight: 44,
     backgroundColor: '#f5fafc',
     borderWidth: 1,
