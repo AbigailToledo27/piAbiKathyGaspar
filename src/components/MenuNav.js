@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import HomeMenu from './HomeMenu';
@@ -26,14 +25,14 @@ function MenuNav(props) {
         return <Login navigation={props.navigation} />;
     }
 
-    return(
-        <Tab.Navigator screenOptions = { { tabBarShowLabel: false, headerShown: false }}>
-            <Tab.Screen name="Inicio" component={HomeMenu} options={ {tabBarIcon: () => <Entypo name="home" size={24} color="black" />}} />
-            <Tab.Screen name="Nuevo Post" component={NewPost} options={ {tabBarIcon: () => <Entypo name="plus" size={24} color="black" />}}/>
-            <Tab.Screen name="Perfil" component={ProfileMenu} options={ {tabBarIcon: () => <MaterialCommunityIcons name="face-man-profile" size={24} color="black" />}}/>
+    return (
+        <Tab.Navigator screenOptions={{ tabBarShowLabel: false, headerShown: false }}>
+            <Tab.Screen name="Inicio" component={HomeMenu} options={{ tabBarIcon: () => <MaterialCommunityIcons name="home-outline" size={26} color="#0b6f91" /> }} />
+            <Tab.Screen name="Nuevo Post" component={NewPost} options={{ tabBarIcon: () => <MaterialCommunityIcons name="plus-circle" size={34} color="#0b6f91" /> }} />
+            <Tab.Screen name="Perfil" component={ProfileMenu} options={{ tabBarIcon: () => <MaterialCommunityIcons name="account-outline" size={26} color="#0b6f91" /> }} />
         </Tab.Navigator>
 
-    )
+    );
 }
 
 export default MenuNav;

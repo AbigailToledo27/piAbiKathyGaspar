@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 function ProfileMenu() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} options={{ title: 'Mi perfil' }}/>
+      <Stack.Screen name="Profile" component={Profile} options={{ title: 'Mi perfil', headerShown: false }}/>
       <Stack.Screen name="Comments" component={Comments} options={{ title: 'Comentarios' }}/>
     </Stack.Navigator>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Pressable, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Pressable, FlatList, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { auth, db } from '../firebase/config';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Post from '../components/Post';
 
 function Profile(props) {
@@ -59,41 +60,116 @@ function Profile(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.username}>{username}</Text>
-        <Text style={styles.email}>{auth.currentUser ? auth.currentUser.email : ''}</Text>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Image
+            source={require('../../assets/ronda-logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.pageTitle}>Mi perfil</Text>
+        </View>
+        <View style={styles.profileCard}>
+          <View style={styles.profileInfo}>
+            <View style={styles.avatar}>
+              <MaterialCommunityIcons name="account-outline" size={30} color="#0b6f91" />
+            </View>
+            <View style={styles.userInfo}>
+              <Text style={styles.username}>{username ? username : 'Mi perfil'}</Text>
+              <Text style={styles.email}>{auth.currentUser ? auth.currentUser.email : ''}</Text>
+            </View>
+          </View>
+          <Pressable style={styles.button} onPress={logout}>
+            <Text style={styles.buttonText}>Cerrar sesión</Text>
+          </Pressable>
+        </View>
+
+        <Text style={styles.title}>Mis publicaciones</Text>
         {error ? <Text style={styles.error}>{error}</Text> : null}
-        <Pressable style={styles.button} onPress={logout}>
-          <Text style={styles.buttonText}>Cerrar sesión</Text>
-        </Pressable>
+        {loading ? (<View style={styles.loading}>
+          <ActivityIndicator size="large" color="#0b6f91" />
+        </View>
+        ) : (
+          <FlatList
+            style={styles.list}
+            data={posts}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <Post post={item} navigation={props.navigation} />}
+            ListEmptyComponent={!loading && !error ? (
+              <Text style={styles.message}>Todavía no publicaste posteos.</Text>
+            ) : null}
+          />
+        )}
       </View>
-      
-      <Text style={styles.title}>Mis posteos</Text>
-      {loading ? <Text style={styles.message}>Cargando tus posteos...</Text> : null}
-      <FlatList
-        style={styles.list}
-        data={posts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Post post={item} navigation={props.navigation} />}
-        ListEmptyComponent={!loading && !error ? (
-          <Text style={styles.message}>Todavía no publicaste posteos.</Text>
-        ) : null}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#eef2ff' },
-  card: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#dbe2f1', borderRadius: 12, padding: 20, marginBottom: 20 },
-  username: { fontSize: 24, fontWeight: 'bold', color: '#172554', marginBottom: 6 },
-  email: { fontSize: 15, color: '#475569' },
-  button: { backgroundColor: '#2446a6', padding: 12, borderRadius: 8, marginTop: 16 },
-  buttonText: { color: '#fff', textAlign: 'center', fontWeight: 'bold' },
-  title: { fontSize: 20, fontWeight: 'bold', color: '#172554', marginBottom: 12 },
+  container: { flex: 1, padding: 16, backgroundColor: '#d9eef7', alignItems: 'center' },
+  content: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 960,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#a9cadb',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#c6dfe9',
+  },
+  logo: { width: 148, height: 50 },
+  pageTitle: { fontSize: 20, fontWeight: 'bold', color: '#174f68' },
+  profileCard: { padding: 18, borderBottomWidth: 1, borderBottomColor: '#c6dfe9' },
+  profileInfo: { flexDirection: 'row', alignItems: 'center' },
+  avatar: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#e8f5fa',
+    borderWidth: 1,
+    borderColor: '#bfdce8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  userInfo: { flex: 1 },
+  username: { fontSize: 24, fontWeight: 'bold', color: '#174f68', marginBottom: 6 },
+  email: { fontSize: 14, lineHeight: 20, color: '#4d6f80' },
+  button: {
+    balignSelf: 'flex-start',
+    minHeight: 44,
+    backgroundColor: '#f5fafc',
+    borderWidth: 1,
+    borderColor: '#aac6d4',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 14,
+    justifyContent: 'center',
+  },
+  buttonText: { color: '#0b678b', fontSize: 14, fontWeight: 'bold' },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#174f68',
+    backgroundColor: '#f5fafc',
+    padding: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: '#c6dfe9',
+  },
   list: { flex: 1, width: '100%' },
-  message: { color: '#475569', fontSize: 14, marginBottom: 12 },
-  error: { color: '#b91c1c', marginTop: 12, marginBottom: 8 },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+  message: { color: '#4d6f80', fontSize: 14, lineHeight: 20, margin: 18 },
+  error: { fontSize: 14, lineHeight: 20, color: '#a32525', margin: 18 },
 });
 
 export default Profile;

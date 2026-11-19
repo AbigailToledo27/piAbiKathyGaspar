@@ -5,11 +5,13 @@ import Comments from '../screens/Comments';
 
 const Stack = createNativeStackNavigator();
 
-export default function HomeMenu() {
+function HomeMenu() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={{ title: 'Inicio' }} />
+      <Stack.Screen name="Home" component={Home} options={{ title: 'Inicio', headerShown: false }} />
       <Stack.Screen name="Comments" component={Comments} options={{ title: 'Comentarios' }} />
     </Stack.Navigator>
   );
 }
+
+export default HomeMenu;

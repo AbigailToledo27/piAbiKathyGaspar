@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase';
 import { auth, db } from '../firebase/config';
 
@@ -32,14 +33,24 @@ function Post(props) {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.owner}>{props.post.data.owner}</Text>
+      <View style={styles.postHeader}>
+        <View style={styles.avatar}>
+          <MaterialCommunityIcons name="account-outline" size={22} color="#0b6f91" />
+        </View>
+        <Text style={styles.owner}>{props.post.data.owner}</Text>
+      </View>
       <Text style={styles.description}>{props.post.data.description}</Text>
       <Text style={styles.likes}>
         {likes.length} {likes.length === 1 ? 'like' : 'likes'}
       </Text>
       <View style={styles.actions}>
         <Pressable style={liked ? styles.likedButton : styles.button} onPress={toggleLike} disabled={updating || !user}>
-          <Text style={styles.buttonText}>Me gusta</Text>
+          <MaterialCommunityIcons
+            name={liked ? 'heart' : 'heart-outline'}
+            size={18}
+            color={liked ? '#fff' : '#0b678b'}
+          />
+          <Text style={liked ? styles.likedButtonText : styles.buttonText}>Me gusta</Text>
         </Pressable>
         <Pressable
           style={styles.button}
@@ -49,6 +60,7 @@ function Post(props) {
             description: props.post.data.description,
           })}
         >
+          <MaterialCommunityIcons name="comment-outline" size={18} color="#0b678b" />
           <Text style={styles.buttonText}>Comentar</Text>
         </Pressable>
       </View>
@@ -58,15 +70,93 @@ function Post(props) {
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: '#fff', padding: 16, borderRadius: 8, marginBottom: 16 },
-  owner: { fontWeight: 'bold', color: '#172554', marginBottom: 8 },
-  description: { fontSize: 16, marginBottom: 12 },
-  likes: { fontSize: 13, color: '#64748b' },
-  actions: { flexDirection: 'row', marginTop: 12 },
-  button: { backgroundColor: '#2446a6', padding: 12, borderRadius: 6, marginRight: 12 },
-  likedButton: { backgroundColor: '#172554', padding: 12, borderRadius: 6, marginRight: 12 },
-  buttonText: { color: '#fff' },
-  error: { color: '#b91c1c', marginTop: 8 },
+  card: {
+    backgroundColor: '#fff',
+    padding: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: '#c6dfe9',
+  },
+  postHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  avatar: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: '#e8f5fa',
+    borderWidth: 1,
+    borderColor: '#bfdce8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  owner: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#0b678b',
+  },
+  description: {
+    fontSize: 16,
+    marginBottom: 12,
+    lineHeight: 24,
+    color: '#173b4d',
+  },
+  likes: {
+    fontSize: 13,
+    color: '#4d6f80',
+  },
+  actions: {
+    flexDirection: 'row',
+    marginTop: 12,
+    flexWrap: 'wrap',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+    backgroundColor: '#f5fafc',
+    borderWidth: 1,
+    borderColor: '#aac6d4',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  likedButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+    backgroundColor: '#0b6f91',
+    borderWidth: 1,
+    borderColor: '#075675',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  buttonText: {
+    color: '#0b678b',
+    fontSize: 13,
+    fontWeight: 'bold',
+    marginLeft: 6,
+  },
+  likedButtonText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 'bold',
+    marginLeft: 6,
+  },
+  error: {
+    color: '#a32525',
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 12,
+  },
 });
 
 export default Post;
