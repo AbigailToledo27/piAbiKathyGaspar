@@ -121,16 +121,19 @@ function Comments(props) {
         </View>
 
         <View style={styles.composer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Escribí un comentario"
-            multiline={true}
-            value={comment}
-            onChangeText={setComment}
-            editable={!sending}
-          />
+          {sending ? (
+            <Text style={styles.input}>{comment}</Text>
+          ) : (
+            <TextInput
+              style={styles.input}
+              placeholder="Escribí un comentario"
+              multiline={true}
+              value={comment}
+              onChangeText={setComment}
+            />
+          )}
           {submitError ? (<Text style={styles.submitError}>{submitError}</Text>) : null}
-          <Pressable style={styles.button} onPress={addComment} disabled={sending}>
+          <Pressable style={styles.button} onPress={addComment}>
             {sending ? (
               <View style={styles.sending}>
                 <ActivityIndicator size="small" color="#fff" />
@@ -332,5 +335,3 @@ const styles = StyleSheet.create({
 });
 
 export default Comments;
-
-

@@ -8,6 +8,7 @@ function Profile(props) {
   const [username, setUsername] = useState('');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -19,8 +20,10 @@ function Profile(props) {
         docs.forEach((doc) => {
           setUsername(doc.data().userName);
         });
+        setLoadingUser(false);
       }, () => {
         setError('No se pudieron cargar los datos del perfil.');
+        setLoadingUser(false);
       });
 
     return unsubscribe;
@@ -75,7 +78,15 @@ function Profile(props) {
               <MaterialCommunityIcons name="account-outline" size={30} color="#0b6f91" />
             </View>
             <View style={styles.userInfo}>
-              <Text style={styles.username}>{username ? username : 'Mi perfil'}</Text>
+              {loadingUser ? (
+                <View style={styles.usernameLoading}>
+                  <ActivityIndicator size="small" color="#0b6f91" />
+                </View>
+              ) : (
+                <Text style={styles.username}>
+                  {username ? username : 'Mi perfil'}
+                </Text>
+              )}
               <Text style={styles.email}>{auth.currentUser ? auth.currentUser.email : ''}</Text>
             </View>
           </View>
@@ -88,7 +99,7 @@ function Profile(props) {
         {error ? <Text style={styles.error}>{error}</Text> : null}
         {!loading && !error && posts.length === 0 ? (
           <Text style={styles.message}>
-            Todavía no publicaste posteos. 
+            Todavía no publicaste posteos.
           </Text>
         ) : null}
         {loading ? (<View style={styles.loading}>
@@ -167,6 +178,13 @@ const styles = StyleSheet.create({
     padding: 18,
     borderBottomWidth: 1,
     borderBottomColor: '#c6dfe9',
+  },
+  usernameLoading: {
+    minHeight: 29,
+    marginBottom: 6,
+    alignSelf: 'flex-start',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   list: { flex: 1, width: '100%' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },

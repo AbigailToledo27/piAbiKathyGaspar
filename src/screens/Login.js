@@ -10,9 +10,14 @@ function Login(props) {
     const navigation = props.navigation;
 
     useEffect(() => {
+        let primeraRevision = true;
+
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                navigation.navigate('MenuNav');
+            if (primeraRevision) {
+                primeraRevision = false;
+                if (user) {
+                    navigation.navigate('MenuNav');
+                }
             }
         });
         return unsubscribe;

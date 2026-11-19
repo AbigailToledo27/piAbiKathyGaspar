@@ -29,7 +29,7 @@ function NewPost(props) {
                 setSending(false);
                 props.navigation.navigate('Inicio', { screen: 'Home' });
             })
-            .catch((error) => {
+            .catch(() => {
                 setError('No se pudo publicar el posteo. Intentá de nuevo.');
                 setSending(false);
             });
@@ -50,20 +50,22 @@ function NewPost(props) {
                 <View style={styles.form}>
                     <Text style={styles.subtitle}>Compartí una idea con la comunidad.</Text>
                     <Text style={styles.label}>Tu publicación</Text>
-                    <TextInput
-                        style={styles.input}
-                        keyboardType="default"
-                        placeholder="Escribí tu posteo"
-                        multiline={true}
-                        value={description}
-                        onChangeText={text => setDescription(text)}
-                        editable={!sending}
-                    />
+                    {sending ? (
+                        <Text style={styles.input}>{description}</Text>
+                    ) : (
+                        <TextInput
+                            style={styles.input}
+                            keyboardType="default"
+                            placeholder="Escribí tu posteo"
+                            multiline={true}
+                            value={description}
+                            onChangeText={text => setDescription(text)}
+                        />
+                    )}
                     {error ? <Text style={styles.error}>{error}</Text> : null}
                     <Pressable
                         style={styles.button}
                         onPress={() => onSubmit()}
-                        disabled={sending}
                     >
                         {sending ? (
                             <View style={styles.sending}>
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#d9eef7', 
+        backgroundColor: '#d9eef7',
         alignItems: 'center',
     },
     content: {
@@ -105,10 +107,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#c6dfe9',
     },
-    logo: { 
-        width: 148, 
+    logo: {
+        width: 148,
         height: 50,
-     },
+    },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -155,21 +157,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    sending: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
+    sending: {
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'center',
-     },
-    sendingText: { 
-        color: '#fff', 
-        fontSize: 16, 
-        fontWeight: 'bold', 
+    },
+    sendingText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
         marginLeft: 8,
-     },
+    },
     error: {
-        color: '#a32525', 
-        fontSize: 14, 
-        lineHeight: 20, 
+        color: '#a32525',
+        fontSize: 14,
+        lineHeight: 20,
         marginBottom: 12,
     },
 });

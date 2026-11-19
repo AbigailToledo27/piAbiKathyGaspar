@@ -46,7 +46,6 @@ function Home(props) {
           <Pressable
             style={styles.homeButton}
             onPress={refrescarPost}
-            disabled={loading}
           >
             <Text style={styles.title}>Inicio</Text>
           </Pressable>
